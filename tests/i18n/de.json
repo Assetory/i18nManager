@@ -1,0 +1,7 @@
+{    
+    "test":
+    {
+        "firstMessage": "Hallo Welt!",
+        "secondMessage": "Es {val}."
+    }
+}

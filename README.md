@@ -1,68 +1,58 @@
 # i18nManager
 
-A simple i18n Module for JavaScript front- and back-end.
+A simple i18n Module for TypeScript/JavaScript front- and back-end.
 
 ## Installation
 
 ```bash
-$ npm i --save @shipyardsuite/i18n-manager
+$ npm i --save @assetory/i18n-manager
 ```
 
 ## Usage
 
 ### Perquisite
 
-1. Create a folder called `i18n` in your applications root folder.
+1. Create a directory called `i18n` in your applications root folder.
 2. Create translation files named after the short form of the language and an index.js file in the folder, 
 3. Import the translation files into the index file.
 
-**EXAMPLE FILES:**
+### EXAMPLE FILES:
 
-./i18n/de.js
+`./i18n/de.json`
 
-```javascript
-export const de = {
+```json
+{
     test:
     {
         firstMessage: "Hallo Welt!",
         secondMessage: "Es {val}."
     }
-};
+}
 ```
 
-./i18n/en.js
+`./i18n/en.js`
 
-```javascript
-export const en = {
+```json
+{
     test:
     {
         firstMessage: "Hello World!",
         secondMessage: "This {val}."
     }
-};
+}
 
-```
-
-./i18n/index.js
-
-```javascript
-import { de } from './de';
-import { en } from './en';
-
-export { de, en };
-export default { de, en };
 ```
 
 ### Getting translations
 
 #### 1. Import the module.
 
-**ES6:**
-```javascript
+**TypeScript:**
+```typescript
 import i18nManager from "@shipyardsuite/i18n-manager";
 ```
 
-**NodeJS:**
+**JavaScript:**
 ```javascript
 const i18nManager = require("@shipyardsuite/i18n-manager");
 ```
@@ -70,7 +60,7 @@ const i18nManager = require("@shipyardsuite/i18n-manager");
 #### 2. Create an instance, and call the determined language (en, de, ...) in the constructor.
 
 ```javascript
-const translations = new i18nManager();
+const translations = new i18nManager('path_to_i18n_directory', 'en');
 ```
 
 #### 3. Call the message according to the json path you set up in the translation file.
@@ -85,7 +75,7 @@ Or, if you need to supply a value
 translations.messageWithValue("test.sentence", value);
 ```
 
-#### 5. Your output now should show the selected message, or [MISSING] if you did not set the right path.
+#### 5. Your output now should show the selected message, or [MISSING] if the translation has not been found.
 
 ## License
 

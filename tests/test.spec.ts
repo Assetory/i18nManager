@@ -1,10 +1,7 @@
 import { expect } from 'chai';
-import { isThrowStatement } from 'typescript';
 import { I18nManager } from '../src/index';
 
-let translations = new I18nManager('./tests/i18n', 'en');
-
-console.log(translations.translationsPath);
+const translations = new I18nManager({ language: 'en', path: './../tests/i18n/' });
 
 describe('i18nManager', () =>
 {
@@ -27,7 +24,7 @@ describe('i18nManager', () =>
     
     it('should load example translations', () =>
     {
-        translations.setPath('./tests/i18n/');
+        translations.setPath('./../tests/i18n/');
         expect(translations.translations).to.not.equal(undefined);
     });
 
@@ -61,5 +58,12 @@ describe('i18nManager', () =>
     it('should get an example message with value german', () =>
     {
         expect(translations.messageWithValue('test.secondMessage', 'funktioniert')).to.equal('Es funktioniert.');
+    });
+
+    it('should throw an error if no translations are found', () =>
+    {
+        translations.setPath('./test/');
+        
+        expect(translations.translations).to.not.equal(undefined);
     });
 });

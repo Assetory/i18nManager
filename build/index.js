@@ -1,27 +1,28 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.I18nManager = void 0;
-var fs_1 = __importDefault(require("fs"));
 var I18nManager = /** @class */ (function () {
-    function I18nManager(translationsPath, language) {
+    function I18nManager(options) {
         var _this = this;
         this.setLanguage = function (language) {
             _this.language = language;
             _this.getTranslations();
         };
-        this.setPath = function (translationsPath) {
-            _this.translationsPath = translationsPath;
+        this.setPath = function (path) {
+            _this.path = path;
             _this.getTranslations();
         };
         this.getTranslations = function () {
-            var rawdata = fs_1.default.readFileSync(_this.translationsPath + ("\\" + _this.language + ".json"));
-            _this.translations = JSON.parse(rawdata);
+            try {
+                var translations = require(_this.path);
+                _this.translations = translations[_this.language];
+            }
+            catch (error) {
+                Error(error);
+            }
         };
         this.searchNestedObject = function (nestedObj, pathArr) {
-            return pathArr.reduce(function (obj, key) { return (obj && obj[key] !== 'undefined') ? obj[key] : undefined; }, nestedObj);
+            return pathArr.reduce(function (obj, key) { return obj && obj[key] !== 'undefined' ? obj[key] : undefined; }, nestedObj);
         };
         this.message = function (key) {
             var searchElements = key.split('.');
@@ -31,8 +32,8 @@ var I18nManager = /** @class */ (function () {
         this.messageWithValue = function (key, val) {
             return _this.message(key) !== '[MISSING]' ? _this.message(key).replace('{val}', val) : _this.message(key);
         };
-        this.translationsPath = translationsPath;
-        this.language = language;
+        this.path = options === null || options === void 0 ? void 0 : options.path;
+        this.language = options === null || options === void 0 ? void 0 : options.language;
         this.translations = {};
         this.getTranslations();
     }

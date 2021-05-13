@@ -1,16 +1,13 @@
-import fs from 'fs';
-import path from 'path';
-
 export class I18nManager
 {
-    translationsPath : string;
+    path : string;
     language : string;
     translations : any;
 
-    constructor(translationsPath : string, language : string)
+    constructor(options: { language: string; path : string })
     {
-        this.translationsPath = translationsPath;
-        this.language = language;
+        this.path = options?.path;
+        this.language = options?.language;
         this.translations = {};
 
         this.getTranslations();
@@ -23,25 +20,32 @@ export class I18nManager
         this.getTranslations();
     };
 
-    setPath = (translationsPath : string) : void =>
+    setPath = (path : string) : void =>
     {
-        this.translationsPath = translationsPath;
+        this.path = path;
 
         this.getTranslations();
     };
 
-    getTranslations = () : any =>
+    getTranslations = () : void =>
     {
-        let rawdata : any = fs.readFileSync(this.translationsPath + `\\${this.language}.json`);
-        this.translations = JSON.parse(rawdata);
-    };
-
-    searchNestedObject = (nestedObj : any, pathArr : any) =>
-    {
-        return pathArr.reduce((obj : any, key : string) => (obj && obj[key] !== 'undefined') ? obj[key] : undefined, nestedObj);
+        try
+        {
+            const translations = require(this.path);
+            this.translations = translations[ this.language ];
+        }
+        catch (error)
+        {
+            Error( error );
+        }
     }
 
-    message = (key : any) =>
+    searchNestedObject = (nestedObj : any, pathArr : any) : string =>
+    {
+        return pathArr.reduce((obj : any, key : string) => obj && obj[ key ] !== 'undefined' ? obj[ key ] : undefined, nestedObj);
+    }
+
+    message = (key : string) : string =>
     {
         const searchElements = key.split('.');
         const response = this.searchNestedObject(this.translations, searchElements);
@@ -49,7 +53,7 @@ export class I18nManager
         return response !== undefined ? response : '[MISSING]';
     };
 
-    messageWithValue = (key : any, val : any) =>
+    messageWithValue = (key : string, val : any) : string =>
     {
         return this.message(key) !== '[MISSING]' ? this.message(key).replace('{val}', val) : this.message(key);
     };

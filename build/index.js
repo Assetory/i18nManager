@@ -8,14 +8,13 @@ var I18nManager = /** @class */ (function () {
             _this.language = language;
             _this.getTranslations();
         };
-        this.setPath = function (path) {
-            _this.path = path;
+        this.setSource = function (source) {
+            _this.source = source;
             _this.getTranslations();
         };
         this.getTranslations = function () {
             try {
-                var translations = require(_this.path);
-                _this.translations = translations[_this.language];
+                _this.translations = _this.source[_this.language];
             }
             catch (error) {
                 Error(error);
@@ -32,7 +31,7 @@ var I18nManager = /** @class */ (function () {
         this.messageWithValue = function (key, val) {
             return _this.message(key) !== '[MISSING]' ? _this.message(key).replace('{val}', val) : _this.message(key);
         };
-        this.path = options === null || options === void 0 ? void 0 : options.path;
+        this.source = options === null || options === void 0 ? void 0 : options.source;
         this.language = options === null || options === void 0 ? void 0 : options.language;
         this.translations = {};
         this.getTranslations();

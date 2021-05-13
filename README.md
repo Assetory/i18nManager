@@ -45,22 +45,24 @@ $ npm i --save @assetory/i18n-manager
 
 ### Getting translations
 
-#### 1. Import the module.
+#### 1. Import the module and translation files
 
 **TypeScript:**
 ```typescript
 import i18nManager from "@assetory/i18n-manager";
+import * as translations from './i18n';
 ```
 
 **JavaScript:**
 ```javascript
 const i18nManager = require("@assetory/i18n-manager");
+const translations = require('./i18n');
 ```
 
-#### 2. Create an instance, and call the determined language (en, de, ...) in the constructor.
+#### 2. Create an instance, and call the determined language (en, de, ...) and source in the constructor.
 
 ```javascript
-const translations = new i18nManager('path_to_i18n_directory', 'en');
+const translations = new i18nManager({ language: 'en', source: translations });
 ```
 
 #### 3. Call the message according to the json path you set up in the translation file.

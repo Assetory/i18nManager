@@ -1,12 +1,12 @@
 export class I18nManager
 {
-    path : string;
+    source : any;
     language : string;
     translations : any;
 
-    constructor(options: { language: string; path : string })
+    constructor(options: { language: string; source: any })
     {
-        this.path = options?.path;
+        this.source = options?.source;
         this.language = options?.language;
         this.translations = {};
 
@@ -20,9 +20,9 @@ export class I18nManager
         this.getTranslations();
     };
 
-    setPath = (path : string) : void =>
+    setSource = (source : any) : void =>
     {
-        this.path = path;
+        this.source = source;
 
         this.getTranslations();
     };
@@ -31,8 +31,7 @@ export class I18nManager
     {
         try
         {
-            const translations = require(this.path);
-            this.translations = translations[ this.language ];
+            this.translations = this.source[ this.language ];
         }
         catch (error)
         {

@@ -18,9 +18,9 @@ $ npm i --save @assetory/i18n-manager
 
 ### EXAMPLE FILES:
 
-`./i18n/de.json`
+`./i18n/de.ts` or `./i18n/de.js`:
 
-```json
+```typescript
 {
     test:
     {
@@ -30,9 +30,9 @@ $ npm i --save @assetory/i18n-manager
 }
 ```
 
-`./i18n/en.js`
+`./i18n/en.ts` or `./i18n/en.js`:
 
-```json
+```typescript
 {
     test:
     {
@@ -49,12 +49,12 @@ $ npm i --save @assetory/i18n-manager
 
 **TypeScript:**
 ```typescript
-import i18nManager from "@shipyardsuite/i18n-manager";
+import i18nManager from "@assetory/i18n-manager";
 ```
 
 **JavaScript:**
 ```javascript
-const i18nManager = require("@shipyardsuite/i18n-manager");
+const i18nManager = require("@assetory/i18n-manager");
 ```
 
 #### 2. Create an instance, and call the determined language (en, de, ...) in the constructor.

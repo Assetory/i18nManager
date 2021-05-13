@@ -1,12 +1,15 @@
 export declare class I18nManager {
-    translationsPath: string;
+    path: string;
     language: string;
     translations: any;
-    constructor(translationsPath: string, language: string);
+    constructor(options: {
+        language: string;
+        path: string;
+    });
     setLanguage: (language: string) => void;
-    setPath: (translationsPath: string) => void;
-    getTranslations: () => any;
-    searchNestedObject: (nestedObj: any, pathArr: any) => any;
-    message: (key: any) => any;
-    messageWithValue: (key: any, val: any) => any;
+    setPath: (path: string) => void;
+    getTranslations: () => void;
+    searchNestedObject: (nestedObj: any, pathArr: any) => string;
+    message: (key: string) => string;
+    messageWithValue: (key: string, val: any) => string;
 }
